@@ -1,0 +1,55 @@
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-archery-brown">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+                <img th:src="@{/img/LOGO KK AC 3.png}" alt="Logo" height="40"
+                     class="d-inline-block align-text-top me-2">
+                KKU Archery Club
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Left Side Of Navbar -->
+                <ul class="navbar-nav me-auto">
+                </ul>
+
+                <!-- Right Side Of Navbar -->
+                <ul class="navbar-nav ms-auto">
+                    <!-- Authentication Links -->
+                    <li th:if="${not #authorization.expression('isAuthenticated()')}" class="nav-item">
+                        <a class="nav-link" th:href="@{/login}">Login</a>
+                    </li>
+                    <li th:if="${not #authorization.expression('isAuthenticated()')}" class="nav-item">
+                        <a class="nav-link" th:href="@{/register}">Register</a>
+                    </li>
+
+                    <li th:if="${#authorization.expression('isAuthenticated()')}" class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span th:text="${#authentication.name}">Username</span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/logout}"
+                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
+                            <form id="logout-form" th:action="@{/logout}" method="post" class="d-none">
+                                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="banner-container">
+        <img th:src="@{/img/head.png}" class="img-fluid w-100" alt="KKU Archery Club Banner" >
+    </div>
+ </div>
