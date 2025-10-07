@@ -20,7 +20,7 @@
                     <a th:href="@{/admin/items/add}" class="btn btn-primary">
                         <i class="fas fa-plus me-2"></i>เพิ่มสต็อก
                     </a>
-                    <a th:href="@{/admin/items/summary}" class="btn btn-outline-secondary">
+                    <a th:href="@{/admin/items}" class="btn btn-outline-secondary">
                         <i class="fas fa-tags me-2"></i>กลับไปหน้าสรุป
                     </a>
                 </div>
@@ -45,11 +45,19 @@
                                                th:disabled="${item.status.name() == 'BORROWED'}">
                                         <!-- Note: Spring expects 'itemIds' as a List/Array in controller -->
                                     </div>
-                                    <div class="flex-grow-1">
-                                        <span class="fw-bold fs-5" th:text="${item.assetCode}">Asset Code</span>
-                                        <p class="mb-1 text-muted" th:text="${item.equip.equipName}">Equip Name</p>
-                                        <p class="mb-1" th:text="${item.status.displayName}">Status</p>
-                                    </div>
+									<div class="flex-grow-1">
+									    <span class="fw-bold fs-5" th:text="${item.assetCode}">Asset Code</span>
+									    <p class="mb-1 text-muted" th:text="${item.equip.equipName}">Equip Name</p>
+									    <p class="mb-1" th:text="${item.status.displayName}">Status</p>
+
+									    <div th:if="${item.status.name() == 'BORROWED' and item.currentBorrower != null}"
+									         class="mt-1">
+									        <small class="text-danger fw-bold">
+									            <i class="fas fa-user-tag me-1"></i>
+									            ถูกยืมโดย: <span th:text="${item.currentBorrower?.username}">ชื่อผู้ยืม</span>
+									        </small>
+									    </div>
+									    </div>
                                     <!-- ... Optional: Dropdown แก้ไขรายชิ้น (เหมือนเดิม) ... -->
                                      <!-- Example of individual item dropdown menu -->
                                     <div class="dropdown">

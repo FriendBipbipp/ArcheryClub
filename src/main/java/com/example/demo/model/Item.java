@@ -134,4 +134,6 @@ public class Item {
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	
+	
 }

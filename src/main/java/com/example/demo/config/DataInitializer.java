@@ -30,6 +30,8 @@ public class DataInitializer implements CommandLineRunner {
         if (userRepository.findByRole(Role.SUPERADMIN).isEmpty()) {
             User admin = new User();
             admin.setEmail("thitiwut.si@kkumail.com"); // ใช้ email แทน username
+            admin.setPhone("0973187245");
+            admin.setStudentid("663380213-6");
             admin.setUsername("ธิติวุฒิ ศรีอมรรัตน์"); // optional
             admin.setPassword(passwordEncoder.encode("123456789")); // รหัสผ่านเริ่มต้น
             admin.setRole(Role.SUPERADMIN); // กำหนด role เป็น SUPERADMIN

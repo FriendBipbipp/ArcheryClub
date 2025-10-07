@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.AdminDashboardViewModel;
 import com.example.demo.dto.AnnouncementDto;
-import com.example.demo.model.Announcement;
 import com.example.demo.model.Loan;
 import com.example.demo.model.User;
 import com.example.demo.service.LoanService;

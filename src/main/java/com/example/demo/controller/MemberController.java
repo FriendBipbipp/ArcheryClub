@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.dto.AnnouncementDto;
 import com.example.demo.dto.MemberDashboardViewModel;
-import com.example.demo.model.Announcement;
 import com.example.demo.model.Loan;
 import com.example.demo.model.User;
 import com.example.demo.service.LoanService;

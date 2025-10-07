@@ -49,5 +49,7 @@ public interface ItemRepository extends JpaRepository<Item,Long>{
     @Query("SELECT i FROM Item i JOIN FETCH i.equip e JOIN FETCH e.category WHERE i.id = :id")
     Optional<Item> findByIdWithEquipDetails(@Param("id") Long id);
     
+    
+    
 
 }
