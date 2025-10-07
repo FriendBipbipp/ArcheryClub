@@ -4,6 +4,26 @@ body.page-landing {
     overflow-x: hidden;
 }
 
+.logo {
+  height: 70px; /* ปรับตามต้องการ */
+  width: auto;  /* รักษาอัตราส่วนภาพ */
+}
+
+
+.dropdown-menu {
+    background-color: #8B4513; /* สีพื้นหลังตามที่คุณต้องการ */
+}
+
+/* ตั้งค่าสีตัวอักษรของแต่ละรายการใน dropdown */
+.dropdown-menu .dropdown-item {
+    color: #fff; /* สีตัวอักษรตามที่คุณต้องการ */
+}
+
+/* (ทางเลือก) เพิ่มเอฟเฟกต์เมื่อเอาเมาส์ไปชี้ (Hover) */
+.dropdown-menu .dropdown-item:hover {
+    background-color: #f8c78c; /* สีพื้นหลังเข้มขึ้นเล็กน้อย */
+    color: #8b311e; /* สีตัวอักษรเข้มขึ้นเล็กน้อย */
+}
        body {
             font-family: 'Sarabun', sans-serif;
         }

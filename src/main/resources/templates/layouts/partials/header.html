@@ -1,8 +1,11 @@
-<div th:fragment="header">
+<!-- 1. เพิ่ม namespace ของ Spring Security (xmlns:sec) เข้าไป -->
+<div th:fragment="header" xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    
     <nav class="navbar navbar-expand-lg navbar-dark bg-archery-brown">
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
-                <img th:src="@{/img/LOGO KK AC 3.png}" alt="Logo" height="40"
+                <img th:src="@{/img/LOGO KK AC 3.png}" alt="Logo" height="60"
                      class="d-inline-block align-text-top me-2">
                 KKU Archery Club
             </a>
@@ -20,28 +23,50 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ms-auto">
-                    <!-- Authentication Links -->
-                    <li th:if="${not #authorization.expression('isAuthenticated()')}" class="nav-item">
+                    <!-- แสดง "Login" และ "Register" เมื่อยังไม่ได้ล็อกอิน -->
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
                         <a class="nav-link" th:href="@{/login}">Login</a>
                     </li>
-                    <li th:if="${not #authorization.expression('isAuthenticated()')}" class="nav-item">
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
                         <a class="nav-link" th:href="@{/register}">Register</a>
                     </li>
 
-                    <li th:if="${#authorization.expression('isAuthenticated()')}" class="nav-item dropdown">
+                    <!-- 2. เมื่อล็อกอินแล้ว ให้แสดง Dropdown ที่มี Role แยก -->
+                    <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span th:text="${#authentication.name}">Username</span>
+                           <!-- แสดงชื่อผู้ใช้ที่ล็อกอินอยู่ -->
+                            <span sec:authentication="name">Username</span>
                         </a>
 
+                        <!-- 3. นำ Dropdown ที่แยก Role มาใส่ตรงนี้ -->
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" th:href="@{/logout}"
-                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Logout
+                            <!-- เมนูสำหรับ Member ทั่วไป -->
+                            <a class="dropdown-item" th:href="@{/loan}">ยืม-คืนอุปกรณ์</a>
+                            <a class="dropdown-item" th:href="@{/myLoanHistory}">ประวัติการยืม-คืน</a>
+
+                            <!-- เมนูสำหรับ Admin และ Super Admin -->
+                            <div sec:authorize="hasAuthority('ADMIN') or hasAuthority('SUPERADMIN')">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" th:href="@{/admin/categories}">จัดการหมวดหมู่</a>
+                                <a class="dropdown-item" th:href="@{/admin/equips}">จัดการอุปกรณ์</a>
+                                <a class="dropdown-item" th:href="@{/admin/items}">จัดการคลังอุปกรณ์</a>
+                                <a class="dropdown-item" th:href="@{/admin/loans/pending-return}">ตรวจสอบการคืน</a>
+								<a class="dropdown-item" th:href="@{/admin/member-list}">ดูรายชื่อสมาชิก</a>
+                            </div>
+
+                            <!-- เมนูสำหรับ Super Admin เท่านั้น -->
+                            <div sec:authorize="hasAuthority('SUPERADMIN')">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" th:href="@{/admin/users}">เพิ่ม-ถอนคณะกรรมการ</a>
+                            </div>
+
+                            <!-- ปุ่ม Logout -->
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" onclick="document.getElementById('logout-form').submit();">
+                               ออกจากระบบ
                             </a>
-                            <form id="logout-form" th:action="@{/logout}" method="post" class="d-none">
-                                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                            </form>
+                            <form id="logout-form" th:action="@{/logout}" method="post" class="d-none"></form>
                         </div>
                     </li>
                 </ul>
@@ -49,7 +74,8 @@
         </div>
     </nav>
 
+    <!-- Banner ยังคงอยู่เหมือนเดิม -->
     <div class="banner-container">
-        <img th:src="@{/img/head.png}" class="img-fluid w-100" alt="KKU Archery Club Banner" >
+        <img th:src="@{/img/head.png}" class="img-fluid w-100" alt="KKU Archery Club Banner">
     </div>
- </div>
+</div>

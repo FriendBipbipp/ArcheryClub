@@ -1,5 +1,13 @@
 package com.example.demo.model;
 
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,11 +15,13 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails{
+	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,6 +41,36 @@ public class User {
 	public String getPhone() {
 		return phone;
 	}
+	//@Column(name = "line_notify_token")
+    //private String lineNotifyToken;
+
+	
+	/*public String getLineNotifyToken() {
+		return lineNotifyToken;
+	}
+
+	public void setLineNotifyToken(String lineNotifyToken) {
+		this.lineNotifyToken = lineNotifyToken;
+	}*/
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
+	private List<Loan> equipLoans;
+
+
+	public List<Loan> getEquipLoans() {
+		return equipLoans;
+	}
+
+	public void setEquipLoans(List<Loan> equipLoans) {
+		this.equipLoans = equipLoans;
+	}
+
+	@Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // เมธอดนี้จะแปลงค่า role ของคุณให้ Spring Security รู้จัก
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
+    }
+	
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
